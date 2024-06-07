@@ -5,13 +5,19 @@ def main():
     sys.stdout.write("$ ")
     sys.stdout.flush()
 
+    # Builtins
+    builtins = ["exit 0"]
+
     # Wait for user input
     command = input()
-    sys.stdout.write(f"{command}: command not found\n")
 
-    # Exit or REPL
-    if command == "exit":
-        sys.stdout.write(f"exited\n")
+    # Command not found
+    if command not in builtins:
+        sys.stdout.write(f"{command}: command not found\n")
+
+    # REPL or Exit
+    if command == "exit 0":
+        sys.exit(0)
     else:
         main()
 
