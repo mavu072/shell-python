@@ -13,7 +13,7 @@ def main():
 
     # Echo command
     if command.startswith("echo"):
-        args = command.removeprefix("echo")
+        args = command.removeprefix("echo").strip()
         command = "echo"
         sys.stdout.write(f"{args}\n")
 
