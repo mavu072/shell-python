@@ -6,10 +6,16 @@ def main():
     sys.stdout.flush()
 
     # Builtins
-    builtins = ["exit 0"]
+    builtins = ["exit 0", "echo"]
 
     # Wait for user input
     command = input()
+
+    # Echo command
+    if command.startswith("echo"):
+        args = command.removeprefix("echo")
+        command = "echo"
+        sys.stdout.write(f"{args}\n")
 
     # Command not found
     if command not in builtins:
