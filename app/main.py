@@ -32,11 +32,10 @@ def main():
         elif args == "cat":
             sys.stdout.write(f"{args} is /bin/cat\n")
         else:
-            # Will be handled in not found
-            command = args
+            sys.stdout.write(f"{args}: not found\n")
 
     # Command not found
-    if command not in builtins:
+    elif command not in builtins:
         sys.stdout.write(f"{command}: command not found\n")
 
     # REPL
