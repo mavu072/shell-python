@@ -53,10 +53,21 @@ def main():
         match command:
             # CD command
             case "cd":
-                if os.path.exists(args):
-                    os.chdir(args)
+                cwd = os.getcwd()
+                dir = args
+
+                # Relative path
+                if args.startswith("."):
+                    # Navigate down the directory tree by one folder
+                    dir = os.path.join(cwd, args)
+                    dir = os.path.normpath(dir)
+
+                # Is file or directory
+                if os.path.exists(dir):
+                    os.chdir(dir)
+                # Not file or directory
                 else:
-                    sys.stdout.write(f"{args}: No such file or directory\n")
+                    sys.stdout.write(f"{dir}: No such file or directory\n")
             # PWD command
             case "pwd":
                 cwd = os.getcwd()
