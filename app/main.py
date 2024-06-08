@@ -67,12 +67,7 @@ def main():
             # Type command
             case "type":
                 # Find executable in PATH 
-                executable = None
-                for pathvar in pathvars:
-                    if os.path.isfile(f"{pathvar}/{args}"):
-                        executable = f"{pathvar}/{args}"
-                        break
-
+                executable = find_executable(args)
                 # Builtins
                 if args in builtins:
                     sys.stdout.write(f"{args} is a shell builtin\n")
