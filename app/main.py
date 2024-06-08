@@ -1,6 +1,15 @@
 import sys
 import os
 
+def find_executable(filename):
+    # PATH variables
+    pathvars =  os.environ.get("PATH").split(":")
+    # Locate PATH var
+    for pathvar in pathvars:
+        if os.path.isfile(f"{pathvar}/{filename}"):
+            return f"{pathvar}/{filename}"
+    return None
+
 def main():
     sys.stdout.write("$ ")
     sys.stdout.flush()
@@ -15,23 +24,35 @@ def main():
     pathvars = PATH.split(":")
 
     # Wait for user input
-    command = input()
+    commandline = input()
+    
+    # Read command line input
+    cmdarr = commandline.split(None)
+
+    # Command
+    command = cmdarr[0]
+
+    # Arguments
+    args = commandline.removeprefix(command).strip()
+
+    # Executable file
+    executablefile = find_executable(command)
 
     # Exit command
-    if command == "exit 0":
+    if commandline == "exit 0":
         sys.exit(0)
 
+    # Executable
+    elif executablefile:
+        # Execute file with command and arguments
+        os.system(commandline)
+
     # Echo command
-    elif command.startswith("echo"):
-        args = command.removeprefix("echo").strip()
-        command = "echo"
+    elif command == "echo":
         sys.stdout.write(f"{args}\n")
 
     # Type command
-    elif command.startswith("type"):
-        args = command.removeprefix("type").strip()
-        command = "type"
-
+    elif command == "type":
         # Find executable in PATH 
         executable = None
         for pathvar in pathvars:
