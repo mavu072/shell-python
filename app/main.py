@@ -8,11 +8,11 @@ def main():
     # Builtins
     builtins = ["exit", "echo", "type"]
 
-    # PATH variable
-    PATH = os.environ["PATH"]
+    # PATH
+    PATH = os.environ.get("PATH")
 
-    # Executables
-    executables = PATH.split(":")
+    # PATH variables
+    pathvars = PATH.split(":")
 
     # Wait for user input
     command = input()
@@ -34,23 +34,20 @@ def main():
 
         # Find executable in PATH 
         executable = None
-        for pathvar in executables:
-            if pathvar.endswith(args):
-                executable = pathvar
+        for pathvar in pathvars:
+            if os.path.isfile(f"{pathvar}/{args}"):
+                executable = f"{pathvar}/{args}"
                 break
 
-        # Executables - In PATH
-        if executable is not None:
-            sys.stdout.write(f"{args} is {executable}\n")
         # Builtins
-        elif args in builtins:
+        if args in builtins:
             sys.stdout.write(f"{args} is a shell builtin\n")
-        # Cat
-        elif args == "cat":
-            sys.stdout.write(f"{args} is /bin/cat\n")
+        # Executables - In PATH
+        elif executable is not None:
+            sys.stdout.write(f"{args} is {executable}\n")
         # Not found
         else:
-            sys.stdout.write(f"{args}: command not found\n")
+            sys.stdout.write(f"{args} not found\n")
 
     # Command not found
     elif command not in builtins:
