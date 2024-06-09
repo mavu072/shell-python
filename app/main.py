@@ -56,6 +56,10 @@ def main():
                 cwd = os.getcwd()
                 dir = args
 
+                # HOME path
+                if args == "~":
+                    dir = os.environ.get("HOME")
+
                 # Relative path
                 if args.startswith("."):
                     # Navigate down the directory tree by one folder
